@@ -6,7 +6,7 @@ import (
 	"log"
 	"time"
 
-	pb "ex1/story/grpc-protos/hello"
+	pb "ex0/grpc/hello"
 	"google.golang.org/grpc"
 	"google.golang.org/grpc/credentials/insecure"
 )
