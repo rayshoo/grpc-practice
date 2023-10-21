@@ -48,86 +48,15 @@ export function loginCodeToJSON(object: LoginCode): string {
   }
 }
 
-export interface LoginResult {
-  loginCode: LoginCode;
-  token?: string | undefined;
-}
-
 export interface LoginRequest {
   username: string;
   password: string;
 }
 
-function createBaseLoginResult(): LoginResult {
-  return { loginCode: 0, token: undefined };
+export interface LoginResult {
+  loginCode: LoginCode;
+  token?: string | undefined;
 }
-
-export const LoginResult = {
-  encode(message: LoginResult, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
-    if (message.loginCode !== 0) {
-      writer.uint32(8).int32(message.loginCode);
-    }
-    if (message.token !== undefined) {
-      writer.uint32(18).string(message.token);
-    }
-    return writer;
-  },
-
-  decode(input: _m0.Reader | Uint8Array, length?: number): LoginResult {
-    const reader = input instanceof _m0.Reader ? input : _m0.Reader.create(input);
-    let end = length === undefined ? reader.len : reader.pos + length;
-    const message = createBaseLoginResult();
-    while (reader.pos < end) {
-      const tag = reader.uint32();
-      switch (tag >>> 3) {
-        case 1:
-          if (tag !== 8) {
-            break;
-          }
-
-          message.loginCode = reader.int32() as any;
-          continue;
-        case 2:
-          if (tag !== 18) {
-            break;
-          }
-
-          message.token = reader.string();
-          continue;
-      }
-      if ((tag & 7) === 4 || tag === 0) {
-        break;
-      }
-      reader.skipType(tag & 7);
-    }
-    return message;
-  },
-
-  fromJSON(object: any): LoginResult {
-    return {
-      loginCode: isSet(object.loginCode) ? loginCodeFromJSON(object.loginCode) : 0,
-      token: isSet(object.token) ? String(object.token) : undefined,
-    };
-  },
-
-  toJSON(message: LoginResult): unknown {
-    const obj: any = {};
-    message.loginCode !== undefined && (obj.loginCode = loginCodeToJSON(message.loginCode));
-    message.token !== undefined && (obj.token = message.token);
-    return obj;
-  },
-
-  create<I extends Exact<DeepPartial<LoginResult>, I>>(base?: I): LoginResult {
-    return LoginResult.fromPartial(base ?? {});
-  },
-
-  fromPartial<I extends Exact<DeepPartial<LoginResult>, I>>(object: I): LoginResult {
-    const message = createBaseLoginResult();
-    message.loginCode = object.loginCode ?? 0;
-    message.token = object.token ?? undefined;
-    return message;
-  },
-};
 
 function createBaseLoginRequest(): LoginRequest {
   return { username: "", password: "" };
@@ -196,6 +125,77 @@ export const LoginRequest = {
     const message = createBaseLoginRequest();
     message.username = object.username ?? "";
     message.password = object.password ?? "";
+    return message;
+  },
+};
+
+function createBaseLoginResult(): LoginResult {
+  return { loginCode: 0, token: undefined };
+}
+
+export const LoginResult = {
+  encode(message: LoginResult, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
+    if (message.loginCode !== 0) {
+      writer.uint32(8).int32(message.loginCode);
+    }
+    if (message.token !== undefined) {
+      writer.uint32(18).string(message.token);
+    }
+    return writer;
+  },
+
+  decode(input: _m0.Reader | Uint8Array, length?: number): LoginResult {
+    const reader = input instanceof _m0.Reader ? input : _m0.Reader.create(input);
+    let end = length === undefined ? reader.len : reader.pos + length;
+    const message = createBaseLoginResult();
+    while (reader.pos < end) {
+      const tag = reader.uint32();
+      switch (tag >>> 3) {
+        case 1:
+          if (tag !== 8) {
+            break;
+          }
+
+          message.loginCode = reader.int32() as any;
+          continue;
+        case 2:
+          if (tag !== 18) {
+            break;
+          }
+
+          message.token = reader.string();
+          continue;
+      }
+      if ((tag & 7) === 4 || tag === 0) {
+        break;
+      }
+      reader.skipType(tag & 7);
+    }
+    return message;
+  },
+
+  fromJSON(object: any): LoginResult {
+    return {
+      loginCode: isSet(object.loginCode) ? loginCodeFromJSON(object.loginCode) : 0,
+      token: isSet(object.token) ? String(object.token) : undefined,
+    };
+  },
+
+  toJSON(message: LoginResult): unknown {
+    const obj: any = {};
+    message.loginCode !== undefined && (obj.loginCode = loginCodeToJSON(message.loginCode));
+    message.token !== undefined && (obj.token = message.token);
+    return obj;
+  },
+
+  create<I extends Exact<DeepPartial<LoginResult>, I>>(base?: I): LoginResult {
+    return LoginResult.fromPartial(base ?? {});
+  },
+
+  fromPartial<I extends Exact<DeepPartial<LoginResult>, I>>(object: I): LoginResult {
+    const message = createBaseLoginResult();
+    message.loginCode = object.loginCode ?? 0;
+    message.token = object.token ?? undefined;
     return message;
   },
 };
